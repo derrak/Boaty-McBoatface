@@ -8,14 +8,17 @@ function ReusableForm(props) {
         <input
           type='text'
           name='comment'
-          placeholder='Comment' />
+          placeholder='Comment' /> 
+          <br></br>
         <textarea
           name='description'
           placeholder='Description/Reasoning' />
+          <br></br>
         <input
           type='text'
           name='user'
           placeholder='User Name' />
+          <br></br>
         <button type='submit'>{props.buttonText}</button>
       </form>
     </React.Fragment>
