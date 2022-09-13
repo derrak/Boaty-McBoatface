@@ -14,7 +14,7 @@ function PostList(props){
           comment={post.comment}
           user={post.user}
           voteCount={post.voteCount}
-          
+          dateTime={post.dateTime}
           whenUpVoteClicked={props.onPostUpVote}
           id={post.id}
           key={post.id}/>
