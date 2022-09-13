@@ -9,9 +9,9 @@ function Post(props){
       <div>
         <h3>{props.comment} - @{props.user}</h3>
         <p><em>Vote count: {props.voteCount}</em></p>
-        <p>Uploaded: {props.dateTime}</p>
         <button onClick = {() => props.whenPostClicked(props.id)}>Edit Post</button>
         <button onClick = {() => props.whenUpVoteClicked(props.id)}>UpVote</button>
+        <button onClick = {() => props.whenDownVoteClicked(props.id)}>DownVote</button>
         <hr/>
       </div>
     </React.Fragment>
@@ -25,7 +25,8 @@ Post.propTypes = {
   id: PropTypes.string,
   dateTime: PropTypes.string,
   whenPostClicked: PropTypes.func,
-  whenUpVoteClicked: PropTypes.func
+  whenUpVoteClicked: PropTypes.func,
+  whenDownVoteClicked: PropTypes.func
 }
 
 export default Post;

@@ -16,6 +16,7 @@ function PostList(props){
           voteCount={post.voteCount}
           dateTime={post.dateTime}
           whenUpVoteClicked={props.onPostUpVote}
+          whenDownVoteClicked={props.onPostDownVote}
           id={post.id}
           key={post.id}/>
           )}
@@ -26,7 +27,8 @@ function PostList(props){
 PostList.propTypes = {
   postList: PropTypes.array,
   onPostSelection: PropTypes.func,
-  onPostUpVote: PropTypes.func
+  onPostUpVote: PropTypes.func,
+  onPostDownVote: PropTypes.func
 };
 
 export default PostList;

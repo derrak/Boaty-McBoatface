@@ -10,6 +10,7 @@ function PostDetail(props){
       <h3>{post.comment} - @{post.user}</h3>
       <p><em>{post.description}</em></p>
       <em>Vote Count: {post.voteCount}</em>
+      <p>Upload Date: {post.dateTime.split(" ").splice(0, 5, "").join(" ")}</p>
       <button onClick={onClickingEdit}>Update Post</button>
       <button onClick={()=> onClickingDelete(post.id)}>Delete Post</button>
       <hr/>

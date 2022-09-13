@@ -56,6 +56,25 @@ class PostControl extends React.Component {
     });
   }
 
+  handleDownVote = (id) => {
+    const selectedPost = this.state.mainPostList.filter(post => post.id === id)[0];
+    const editedMainPostList = this.state.mainPostList.filter(post => post.id !== id);
+    const upVote = (selectedPost) => {
+      return {
+        ...selectedPost,
+        voteCount: selectedPost.voteCount - 1
+      }
+    };
+    const updatedPost = upVote(selectedPost);
+    console.log("Updated Post: ", updatedPost);
+    const lastPostList = editedMainPostList.concat(updatedPost);
+    console.log("lastPostList: ", lastPostList);
+    this.setState({
+      mainPostList: lastPostList,
+      selectedPost: null
+    });
+  }
+
   handleEditClick = () => {
     this.setState({editing: true});
   }
@@ -103,7 +122,8 @@ class PostControl extends React.Component {
       currentlyVisibleState = <PostList 
       onPostSelection={this.handleChangingSelectedPost} 
       postList={this.state.mainPostList} 
-      onPostUpVote={this.handleUpVote}/>;
+      onPostUpVote={this.handleUpVote}
+      onPostDownVote={this.handleDownVote}/>;
       buttonText = "Add Post"; 
     }
     return (

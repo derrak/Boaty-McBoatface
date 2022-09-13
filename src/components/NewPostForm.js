@@ -15,7 +15,7 @@ function NewPostForm(props){
       dateTime: Date()
     });
   }
-  console.log(Date().split(" ").splice(0, 5, "").join(" "));
+  
   return (
     <React.Fragment>
       <ReusableForm 
