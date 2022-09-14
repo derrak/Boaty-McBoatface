@@ -11,7 +11,7 @@ class PostControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formVisibleOnPage: false,
+      
       selectedPost: null,
       editing: false
     };
@@ -20,14 +20,15 @@ class PostControl extends React.Component {
   handleClick = () => {
     if (this.state.selectedPost != null) {
       this.setState({
-        formVisibleOnPage: false,
         selectedPost: null,
         editing: false
       });
     } else {
-      this.setState(prevState => ({
-        formVisibleOnPage: !prevState.formVisibleOnPage,
-      }));
+      const { dispatch } = this.props;
+      const action = {
+        type: 'TOGGLE_FORM'
+      }
+      dispatch(action);
     }
   }
 
@@ -99,8 +100,6 @@ class PostControl extends React.Component {
     });
   }
 
-
-
   handleAddingNewPostToList = (newPost) => {
     const { dispatch } = this.props;
     const { id, comment, description, user, voteCount, dateTime} = newPost;
@@ -115,7 +114,10 @@ class PostControl extends React.Component {
       
     }
     dispatch(action);
-    this.setState({formVisibleOnPage: false});
+    const action2 = {
+      type: 'TOGGLE_FORM'
+    }
+    dispatch(action2);
   }
   
   handleChangingSelectedPost = (id) => {
@@ -137,7 +139,7 @@ class PostControl extends React.Component {
       onClickingDelete={this.handleDeletingPost}
       onClickingEdit = {this.handleEditClick} />
       buttonText = "Return to Post List";
-    } else if (this.state.formVisibleOnPage) {
+    } else if (this.props.formVisibleOnPage) {
       currentlyVisibleState = <NewPostForm 
       onNewPostCreation={this.handleAddingNewPostToList}/>;
       buttonText = "Return to Post List"; 
@@ -160,14 +162,16 @@ class PostControl extends React.Component {
 }
 
 PostControl.propTypes = {
-  mainPostList: PropTypes.object
-}
+  mainPostList: PropTypes.object,
+  formVisibleOnPage: PropTypes.bool
+};
 
 const mapStateToProps = state => {
   return{
-    mainPostList: state
+    mainPostList: state.mainPostList,
+    formVisibleOnPage: state.formVisibleOnPage
   }
-}
+};
 
 PostControl = connect(mapStateToProps)(PostControl);
 
