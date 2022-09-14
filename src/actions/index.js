@@ -1,16 +1,18 @@
+import * as c from './../actions/ActionTypes';
+
 export const deletePost = id => ({
-  type: 'DELETE_POST',
+  type: c.DELETE_POST,
   id
 });
 
 export const toggleForm = () => ({
-  type: 'TOGGLE_FORM'
+  type: c.TOGGLE_FORM
 });
 
 export const addPost = (post) => {
   const { comment, description, user, id, voteCount, dateTime } = post;
   return {
-    type: 'ADD_POST',
+    type: c.ADD_POST,
     comment: comment,
     description: description,
     user: user,
@@ -23,7 +25,7 @@ export const addPost = (post) => {
 export const upVote = (post) => {
   const { comment, description, user, id, voteCount, dateTime } = post;
   return {
-    type: 'ADD_POST',
+    type: c.ADD_POST,
     comment: comment,
     description: description,
     user: user,
@@ -36,7 +38,7 @@ export const upVote = (post) => {
 export const downVote = (post) => {
   const { comment, description, user, id, voteCount, dateTime } = post;
   return {
-    type: 'ADD_POST',
+    type: c.ADD_POST,
     comment: comment,
     description: description,
     user: user,

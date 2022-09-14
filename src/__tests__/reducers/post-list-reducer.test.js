@@ -1,6 +1,7 @@
 
 import postListReducer from '../../reducers/post-list-reducer';
 import { v4 } from 'uuid';
+import * as c from './../../actions/ActionTypes';
 
 describe('postListReducer', () => {
 
@@ -40,7 +41,7 @@ describe('postListReducer', () => {
   test('Should successfully add new post data to mainPostList', () => {
     const { comment, description, user, id, voteCount, dateTime } = postData;
     action = {
-        type: 'ADD_POST',
+        type: c.ADD_POST,
         comment: comment,
         description: description,
         user: user,
@@ -62,7 +63,7 @@ describe('postListReducer', () => {
 
   test('Should successfully delete a post', () => {
     action = {
-      type: 'DELETE_POST',
+      type: c.DELETE_POST,
       id: 1
     };
     expect(postListReducer(currentState, action)).toEqual({

@@ -6,6 +6,8 @@ import PostDetail from './PostDetail';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as a from './../actions'
+
+
 class PostControl extends React.Component {
 
   constructor(props) {
