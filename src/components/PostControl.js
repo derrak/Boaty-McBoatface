@@ -3,6 +3,8 @@ import NewPostForm from './NewPostForm';
 import PostList from './PostList';
 import EditPostForm from './EditPostForm';
 import PostDetail from './PostDetail';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class PostControl extends React.Component {
 
@@ -10,7 +12,6 @@ class PostControl extends React.Component {
     super(props);
     this.state = {
       formVisibleOnPage: false,
-      mainPostList: [],
       selectedPost: null,
       editing: false
     };
@@ -31,48 +32,48 @@ class PostControl extends React.Component {
   }
 
   handleDeletingPost = (id) => {
-    const newMainPostList = this.state.mainPostList.filter(post => post.id !== id);
-    this.setState({
-      mainPostList: newMainPostList,
-      selectedPost: null
-    });
-  }
-  handleUpVote = (id) => {
-    const selectedPost = this.state.mainPostList.filter(post => post.id === id)[0];
-    const editedMainPostList = this.state.mainPostList.filter(post => post.id !== id);
-    const upVote = (selectedPost) => {
-      return {
-      ...selectedPost,
-      voteCount: selectedPost.voteCount + 1
-      }
-    };
-    const updatedPost = upVote(selectedPost);
-    console.log("Updated Post: ", updatedPost);
-    const lastPostList = editedMainPostList.concat(updatedPost);
-    console.log("lastPostList: ", lastPostList);
-    this.setState({
-        mainPostList: lastPostList,
-        selectedPost: null
-    });
+    const { dispatch } = this.props;
+    const action = {
+      type: 'DELETE_POST',
+      id: id
+    }
+    dispatch(action);
+    this.setState({selectedPost: null});
   }
 
-  handleDownVote = (id) => {
-    const selectedPost = this.state.mainPostList.filter(post => post.id === id)[0];
-    const editedMainPostList = this.state.mainPostList.filter(post => post.id !== id);
-    const upVote = (selectedPost) => {
-      return {
-        ...selectedPost,
-        voteCount: selectedPost.voteCount - 1
-      }
-    };
-    const updatedPost = upVote(selectedPost);
-    console.log("Updated Post: ", updatedPost);
-    const lastPostList = editedMainPostList.concat(updatedPost);
-    console.log("lastPostList: ", lastPostList);
-    this.setState({
-      mainPostList: lastPostList,
-      selectedPost: null
-    });
+  handleUpVote = (postId) => {
+    const selectedPost = this.props.mainPostList[postId];
+    const { id, comment, description, user, voteCount, dateTime } = selectedPost;
+    const { dispatch } = this.props;
+    const action = {
+      type: 'ADD_POST',
+      id: id,
+      comment: comment,
+      description: description,
+      user: user,
+      voteCount: (voteCount + 1),
+      dateTime: dateTime
+    }
+    dispatch(action)
+    this.setState({ selectedPost: null })
+  }
+
+  
+  handleDownVote = (postId) => {
+    const selectedPost= this.props.mainPostList[postId];
+    const { id, comment, description, user, voteCount, dateTime } = selectedPost;
+    const { dispatch } = this.props;
+    const action = {
+      type: 'ADD_POST',
+      id: id,
+      comment: comment,
+      description: description,
+      user: user,
+      voteCount: (voteCount - 1),
+      dateTime: dateTime
+    }
+    dispatch(action)
+    this.setState({selectedPost: null})
   }
 
   handleEditClick = () => {
@@ -80,24 +81,45 @@ class PostControl extends React.Component {
   }
 
   handleEditingPostInList = (postToEdit) => {
-    const editedMainPostList = this.state.mainPostList
-      .filter(post => post.id !== this.state.selectedPost.id)
-      .concat(postToEdit);
+    const { dispatch } = this.props;
+    const { id, comment, description, user, voteCount, dateTime } = postToEdit;
+    const action = {
+      type: 'ADD_POST',
+      id: id,
+      comment: comment,
+      description: description,
+      user: user,
+      voteCount: voteCount,
+      dateTime: dateTime
+    }
+    dispatch(action);
     this.setState({
-      mainPostList: editedMainPostList,
       editing: false,
       selectedPost: null
     });
   }
 
+
+
   handleAddingNewPostToList = (newPost) => {
-    const newMainPostList = this.state.mainPostList.concat(newPost);
-    this.setState({mainPostList: newMainPostList});
+    const { dispatch } = this.props;
+    const { id, comment, description, user, voteCount, dateTime} = newPost;
+    const action = {
+      type: 'ADD_POST',
+      id: id,
+      comment: comment,
+      description: description,
+      user: user,
+      voteCount: voteCount,
+      dateTime: dateTime
+      
+    }
+    dispatch(action);
     this.setState({formVisibleOnPage: false});
   }
-
+  
   handleChangingSelectedPost = (id) => {
-    const selectedPost = this.state.mainPostList.filter(post => post.id === id)[0];
+    const selectedPost = this.props.mainPostList[id];
     this.setState({selectedPost: selectedPost});
   }
 
@@ -116,12 +138,13 @@ class PostControl extends React.Component {
       onClickingEdit = {this.handleEditClick} />
       buttonText = "Return to Post List";
     } else if (this.state.formVisibleOnPage) {
-      currentlyVisibleState = <NewPostForm onNewPostCreation={this.handleAddingNewPostToList}/>;
+      currentlyVisibleState = <NewPostForm 
+      onNewPostCreation={this.handleAddingNewPostToList}/>;
       buttonText = "Return to Post List"; 
     } else {
       currentlyVisibleState = <PostList 
       onPostSelection={this.handleChangingSelectedPost} 
-      postList={this.state.mainPostList} 
+      postList={this.props.mainPostList} 
       onPostUpVote={this.handleUpVote}
       onPostDownVote={this.handleDownVote}/>;
       buttonText = "Add Post"; 
@@ -135,6 +158,18 @@ class PostControl extends React.Component {
   }
 
 }
+
+PostControl.propTypes = {
+  mainPostList: PropTypes.object
+}
+
+const mapStateToProps = state => {
+  return{
+    mainPostList: state
+  }
+}
+
+PostControl = connect(mapStateToProps)(PostControl);
 
 export default PostControl;
 

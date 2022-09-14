@@ -15,7 +15,7 @@ function NewPostForm(props){
       dateTime: Date()
     });
   }
-  
+  //Where all new vars are started 
   return (
     <React.Fragment>
       <ReusableForm 

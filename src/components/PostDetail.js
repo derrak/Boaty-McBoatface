@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 function PostDetail(props){
   const { post, onClickingDelete, onClickingEdit } = props; 
-
+  // console.log("post:",post,"dateTime:", post.datetime);
   return (
     <React.Fragment>
       <h1>Post Detail</h1>
