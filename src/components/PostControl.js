@@ -5,7 +5,7 @@ import EditPostForm from './EditPostForm';
 import PostDetail from './PostDetail';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import * as a from './../actions'
 class PostControl extends React.Component {
 
   constructor(props) {
@@ -25,54 +25,30 @@ class PostControl extends React.Component {
       });
     } else {
       const { dispatch } = this.props;
-      const action = {
-        type: 'TOGGLE_FORM'
-      }
+      const action = a.toggleForm();
       dispatch(action);
     }
   }
 
   handleDeletingPost = (id) => {
     const { dispatch } = this.props;
-    const action = {
-      type: 'DELETE_POST',
-      id: id
-    }
+    const action = a.deletePost(id);
     dispatch(action);
     this.setState({selectedPost: null});
   }
 
   handleUpVote = (postId) => {
     const selectedPost = this.props.mainPostList[postId];
-    const { id, comment, description, user, voteCount, dateTime } = selectedPost;
     const { dispatch } = this.props;
-    const action = {
-      type: 'ADD_POST',
-      id: id,
-      comment: comment,
-      description: description,
-      user: user,
-      voteCount: (voteCount + 1),
-      dateTime: dateTime
-    }
+    const action = a.upVote(selectedPost);
     dispatch(action)
     this.setState({ selectedPost: null })
   }
 
-  
   handleDownVote = (postId) => {
-    const selectedPost= this.props.mainPostList[postId];
-    const { id, comment, description, user, voteCount, dateTime } = selectedPost;
+    const selectedPost = this.props.mainPostList[postId];
     const { dispatch } = this.props;
-    const action = {
-      type: 'ADD_POST',
-      id: id,
-      comment: comment,
-      description: description,
-      user: user,
-      voteCount: (voteCount - 1),
-      dateTime: dateTime
-    }
+    const action = a.downVote(selectedPost);
     dispatch(action)
     this.setState({selectedPost: null})
   }
@@ -83,16 +59,7 @@ class PostControl extends React.Component {
 
   handleEditingPostInList = (postToEdit) => {
     const { dispatch } = this.props;
-    const { id, comment, description, user, voteCount, dateTime } = postToEdit;
-    const action = {
-      type: 'ADD_POST',
-      id: id,
-      comment: comment,
-      description: description,
-      user: user,
-      voteCount: voteCount,
-      dateTime: dateTime
-    }
+    const action = a.addPost(postToEdit);
     dispatch(action);
     this.setState({
       editing: false,
@@ -102,21 +69,9 @@ class PostControl extends React.Component {
 
   handleAddingNewPostToList = (newPost) => {
     const { dispatch } = this.props;
-    const { id, comment, description, user, voteCount, dateTime} = newPost;
-    const action = {
-      type: 'ADD_POST',
-      id: id,
-      comment: comment,
-      description: description,
-      user: user,
-      voteCount: voteCount,
-      dateTime: dateTime
-      
-    }
+    const action = a.addPost(newPost);
     dispatch(action);
-    const action2 = {
-      type: 'TOGGLE_FORM'
-    }
+    const action2 = a.toggleForm();
     dispatch(action2);
   }
   
