@@ -5,7 +5,8 @@ import EditPostForm from './EditPostForm';
 import PostDetail from './PostDetail';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as a from './../actions'
+import * as a from './../actions';
+import { formatDistanceToNow } from 'date-fns';
 
 
 class PostControl extends React.Component {
@@ -13,12 +14,33 @@ class PostControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
       selectedPost: null,
       editing: false
     };
   }
+//------------Timer functions------------------------
+  componentDidMount() {
+    this.waitTimeUpdateTimer = setInterval(() =>
+      this.updateTicketElapsedWaitTime(),
+      60000
+    );
+  }
+//60000 for minutes // 1000 for seconds ^^
+  // We won't be using this method for our Help Queue update — but it's important to see how it works.
+  
+  componentWillUnmount() {
+    clearInterval(this.waitTimeUpdateTimer);
+  }
 
+  updateTicketElapsedWaitTime = () => {
+    const { dispatch } = this.props;
+    Object.values(this.props.mainPostList).forEach(post => {
+      const newRelativeTimeDistance = formatDistanceToNow(post.timeOpen);
+      const action = a.updateTime(post.id, newRelativeTimeDistance);
+      dispatch(action);
+    });
+  }
+//-------------------------------------------------
   handleClick = () => {
     if (this.state.selectedPost != null) {
       this.setState({

@@ -15,6 +15,7 @@ function Post(props) {
       <div>
         <h3>{props.comment} - @{props.user}</h3>
         <p><em>Vote count: {props.voteCount}</em></p>
+        {/* <p><em>{props.relativeTimeDistance}</em></p> */}
         <Row>
         <Col md={3}>
           <Button variant="primary" onClick={() => props.whenUpVoteClicked(props.id)}>UpVote</Button>
@@ -39,6 +40,7 @@ Post.propTypes = {
   voteCount: PropTypes.number,
   id: PropTypes.string,
   dateTime: PropTypes.string,
+  // relativeTimeDistance: PropTypes.string,
   whenPostClicked: PropTypes.func,
   whenUpVoteClicked: PropTypes.func,
   whenDownVoteClicked: PropTypes.func

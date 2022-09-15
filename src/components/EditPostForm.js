@@ -45,7 +45,9 @@ if (event.target.user.value === "") {
       user: editedUser, 
       id: post.id,
       voteCount: post.voteCount,
-      dateTime: post.dateTime
+      dateTime: post.dateTime,
+      timeOpen: post.timeOpen,
+      relativeTimeDistance: post.relativeTimeDistance
     });
 }
 

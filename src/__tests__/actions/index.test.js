@@ -19,6 +19,8 @@ describe('Help Queue actions', () => {
       description: 'Named after my dad',
       user: 'user22',
       id: 2,
+      timeOpen: 0,
+      relativeTimeDistance: 'less than a minute ago'
 
     })).toEqual({
       type: c.ADD_POST,
@@ -26,6 +28,17 @@ describe('Help Queue actions', () => {
       description: 'Named after my dad',
       user: 'user22',
       id: 2,
+      timeOpen: 0,
+      relativeTimeDistance: 'less than a minute ago'
+
+    });
+  });
+
+  it('updateTime should create UPDATE_TIME action', () => {
+    expect(actions.updateTime(1, 'less than a minute ago')).toEqual({
+      type: c.UPDATE_TIME,
+      id: 1,
+      relativeTimeDistance: 'less than a minute ago'
     });
   });
 });

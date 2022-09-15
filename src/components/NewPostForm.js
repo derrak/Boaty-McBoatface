@@ -3,22 +3,24 @@ import { v4 } from 'uuid';
 import PropTypes from "prop-types"; 
 import ReusableForm from "./ReusableForm";
 import Container from 'react-bootstrap/Container';
-
+import { formatDistanceToNow } from 'date-fns';
 
 function NewPostForm(props){
   function handleNewPostFormSubmission(event) {
     event.preventDefault();
-    console.log("Comment:", event.target.comment);
-    console.log("Value:", event.target.comment.value);
+
     props.onNewPostCreation({
       comment: event.target.comment.value, 
       description: event.target.description.value, 
       user: event.target.user.value, 
       id: v4(),
       voteCount: parseInt(1),
-      dateTime: Date()
+      dateTime: Date(),
+      timeOpen: new Date(),
+      relativeTimeDistance: formatDistanceToNow(new Date())
     });
   }
+    
   //Where all new vars are started 
   return (
     <React.Fragment>

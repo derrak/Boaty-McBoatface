@@ -17,6 +17,7 @@ function PostList(props){
           user={post.user}
           voteCount={post.voteCount}
           dateTime={post.dateTime}
+          relativeTimeDistance={post.relativeTimeDistance}
           whenUpVoteClicked={props.onPostUpVote}
           whenDownVoteClicked={props.onPostDownVote}
           id={post.id}
