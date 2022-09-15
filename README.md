@@ -1,6 +1,5 @@
 ## DIAGRAM
-![Component Diagram](src/img/Diagram.jpg)"
-
+![Component Diagram](src/img/Diagram.png)
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
