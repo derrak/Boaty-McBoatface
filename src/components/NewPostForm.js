@@ -20,7 +20,7 @@ function NewPostForm(props){
       relativeTimeDistance: formatDistanceToNow(new Date())
     });
   }
-    
+  //
   //Where all new vars are started 
   return (
     <React.Fragment>
